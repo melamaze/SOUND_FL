@@ -222,17 +222,21 @@ if __name__ == '__main__':
                         new_map[i][j] = tmp / 16.0
 
                 # erase influence
+                threshold = 0.6
                 for i in range(4000):
                     x = pixel_value[i]
-                    if x.value < 0.70:
+                    # exceed threshold -> stop
+                    if x.value < threshold:
                         print("STOP AT", i)
                         break
                     mfccs[x.i][x.j] = new_map[x.i][x.j]
 
+                # record 1 erase
                 if times == 1 and res == label:
                     twice += 1
                     print("TWICE")
 
+            # record acc(vote)
             flag = 0
             for i in range(30):
                 if i == label:
@@ -245,6 +249,6 @@ if __name__ == '__main__':
             if not flag:
                 print("AC")
                 
-    # /5 & - >> NICE
+    # acc
     print("ACC: ", ac, " / ", ac + wa, " = ", ac / (ac + wa))
-    print("ACC: ", twice, " / ", ac + wa, " = ", twice / (ac + wa))
+    print("1ST ERASE ACC: ", twice, " / ", ac + wa, " = ", twice / (ac + wa))
